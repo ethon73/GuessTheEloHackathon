@@ -1,0 +1,97 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Stats
+{% endblock %}
+
+{% block main %}
+
+    <div id="statsGrid">
+        <h3 id="statsIdentifier"> Statistics For: <b>{{ user }}</b></h3>
+        <div class="statsOverview">
+            <h5>Games Played: </h5>
+            <h4 id="gamesPlayed"></h4>
+            <h4>|</h4>
+            <h5>Best Guess: </h5>
+            <h4 id="bestGuess"></h4>
+            <h4>|</h4>
+            <h5>Average Difference: </h5>
+            <h4 id="averageDiff"></h4>
+        </div>
+        <h5 id="statsHeader">Guess Distribution</h5>
+        <div class="statsDistribution">
+            <p>Elo Range</p>
+            <!-- https://www.w3schools.com/ai/ai_chartjs.asp / https://www.w3schools.com/js/tryit.asp?filename=tryai_chartjs_bars_horizontal -->
+            <canvas id="guessChart" style="width:100%;max-width:600px"></canvas>
+            <div class="numberOfGuesses">
+
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        var stats = {{ userStats | tojson }}
+        window.onload = function() {
+            // var stats = {{ userStats | tojson }}
+            // console.log(stats)
+
+            toAdd = document.querySelector("#gamesPlayed")
+            toAdd.innerHTML = `${stats.gamesPlayed} `
+            toAdd = document.querySelector("#bestGuess")
+            toAdd.innerHTML = `${stats.bestGuess} Elo Difference`
+            toAdd = document.querySelector("#averageDiff")
+            toAdd.innerHTML = `${stats.average} Elo`
+        }
+
+        // #bar chart  https://www.w3schools.com/ai/ai_chartjs.asp / https://www.w3schools.com/js/tryit.asp?filename=tryai_chartjs_bars_horizontal
+        var u10 = stats["u10"]
+        var u25 = stats["u25"]
+        var u50 = stats["u50"]
+        var u100 = stats["u100"]
+        var u250 = stats["u250"]
+        var u500 = stats["u500"]
+        var u1000 = stats["u1000"]
+        var other = stats["other"]
+        var gamesPlayed = stats["gamesPlayed"]
+
+        var xValues = ["0-10", "11-25", "26-50", "51-100", "101-250", "251-500", "501-1000", "1000+"];
+        var yValues = [u10, u25, u50, u100, u250, u500, u1000, other];
+        var barColors = "orange";
+
+        new Chart("guessChart", {
+          type: "horizontalBar",
+          data: {
+          labels: xValues,
+          datasets: [{
+            backgroundColor: barColors,
+            data: yValues
+          }]
+        },
+          options: {
+            legend: {display: false},
+            title: {
+              display: false,
+              text: "Guess Distribution"
+            },
+            scales: {
+              xAxes: [{ticks: {min: 0, max: gamesPlayed}}]
+            }
+          }
+        });
+
+        var u10p = Math.round(stats["u10"] / stats["gamesPlayed"] * 100)
+        var u25p = Math.round(stats["u25"] / stats["gamesPlayed"] * 100)
+        var u50p = Math.round(stats["u50"] / stats["gamesPlayed"] * 100)
+        var u100p = Math.round(stats["u100"] / stats["gamesPlayed"] * 100)
+        var u250p = Math.round(stats["u250"] / stats["gamesPlayed"] * 100)
+        var u500p = Math.round(stats["u500"] / stats["gamesPlayed"] * 100)
+        var u1000p = Math.round(stats["u1000"] / stats["gamesPlayed"] * 100)
+        var otherp = Math.round(stats["other"] / stats["gamesPlayed"] * 100)
+
+        table = document.querySelector(".numberOfGuesses")
+        table.innerHTML = `<p>0-10 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | ${u10} | ${u10p}%</p> <p>11-25 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | ${u25} | ${u25p}%</p> <p>26-50 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | ${u50} | ${u50p}%</p> <p>51-100 &nbsp;&nbsp;&nbsp; | ${u100} | ${u100p}%</p> <p>101-250 &nbsp; | ${u250} | ${u250p}%</p> <p>251-500 &nbsp; | ${u500} | ${u500p}%</p> <p>501-1000 | ${u1000} | ${u1000p}%</p> <p>1000+ &nbsp;&nbsp;&nbsp;&nbsp; | ${other} | ${otherp}%</p>`
+
+    </script>
+
+{% endblock %}

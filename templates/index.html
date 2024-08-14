@@ -1,0 +1,516 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Guess The Elo
+{% endblock %}
+
+{% block main %}
+<!-- Not needed as initial setup caches images, but had bugs previous so still runs as a failsafe -->
+<div style="display: none;">
+    <img src="{{ url_for('static', filename='pieces/P.png') }}">
+    <img src="{{ url_for('static', filename='pieces/R.png') }}">
+    <img src="{{ url_for('static', filename='pieces/B.png') }}">
+    <img src="{{ url_for('static', filename='pieces/N.png') }}">
+    <img src="{{ url_for('static', filename='pieces/Q.png') }}">
+    <img src="{{ url_for('static', filename='pieces/P.png') }}">
+    <img src="{{ url_for('static', filename='pieces/k.png') }}">
+    <img src="{{ url_for('static', filename='pieces/r.png') }}">
+    <img src="{{ url_for('static', filename='pieces/b.png') }}">
+    <img src="{{ url_for('static', filename='pieces/n.png') }}">
+    <img src="{{ url_for('static', filename='pieces/q.png') }}">
+    <img src="{{ url_for('static', filename='pieces/p.png') }}">
+</div>
+
+    <div class = chessboard>
+
+        <div id = "a1">
+
+        </div>
+        <div id = "a2">
+
+        </div>
+        <div id = "a3">
+
+        </div>
+        <div id = "a4">
+
+        </div>
+        <div id = "a5">
+
+        </div>
+        <div id = "a6">
+
+        </div>
+        <div id = "a7">
+
+        </div>
+        <div id = "a8">
+
+        </div>
+        <!-- ~~~ -->
+        <div id = "b1">
+
+
+        </div>
+        <div id = "b2">
+
+
+        </div>
+        <div id = "b3">
+
+
+        </div>
+        <div id = "b4">
+
+
+        </div>
+        <div id = "b5">
+
+
+        </div>
+        <div id = "b6">
+
+
+        </div>
+        <div id = "b7">
+
+
+        </div>
+        <div id = "b8">
+
+
+        </div>
+        <!-- ~~~ -->
+        <div id = "c1">
+
+
+        </div>
+        <div id = "c2">
+
+
+        </div>
+        <div id = "c3">
+
+
+        </div>
+        <div id = "c4">
+
+
+        </div>
+        <div id = "c5">
+
+
+        </div>
+        <div id = "c6">
+
+
+        </div>
+        <div id = "c7">
+
+
+        </div>
+        <div id = "c8">
+
+
+        </div>
+        <!-- ~~~ -->
+        <div id = "d1">
+
+
+        </div>
+        <div id = "d2">
+
+
+        </div>
+        <div id = "d3">
+
+
+        </div>
+        <div id = "d4">
+
+
+        </div>
+        <div id = "d5">
+
+
+        </div>
+        <div id = "d6">
+
+
+        </div>
+        <div id = "d7">
+
+
+        </div>
+        <div id = "d8">
+
+
+        </div>
+        <!-- ~~~ -->
+        <div id = "e1">
+
+
+        </div>
+        <div id = "e2">
+
+
+        </div>
+        <div id = "e3">
+
+
+        </div>
+        <div id = "e4">
+
+
+        </div>
+        <div id = "e5">
+
+
+        </div>
+        <div id = "e6">
+
+
+        </div>
+        <div id = "e7">
+
+
+        </div>
+        <div id = "e8">
+
+
+        </div>
+        <!-- ~~~ -->
+        <div id = "f1">
+
+
+        </div>
+        <div id = "f2">
+
+
+        </div>
+        <div id = "f3">
+
+
+        </div>
+        <div id = "f4">
+
+
+        </div>
+        <div id = "f5">
+
+
+        </div>
+        <div id = "f6">
+
+
+        </div>
+        <div id = "f7">
+
+
+        </div>
+        <div id = "f8">
+
+
+        </div>
+        <!-- ~~~ -->
+        <div id = "g1">
+
+
+        </div>
+        <div id = "g2">
+
+
+        </div>
+        <div id = "g3">
+
+
+        </div>
+        <div id = "g4">
+
+
+        </div>
+        <div id = "g5">
+
+
+        </div>
+        <div id = "g6">
+
+
+        </div>
+        <div id = "g7">
+
+
+        </div>
+        <div id = "g8">
+
+
+        </div>
+        <!-- ~~~ -->
+        <div id = "h1">
+
+
+        </div>
+        <div id = "h2">
+
+
+        </div>
+        <div id = "h3">
+
+
+        </div>
+        <div id = "h4">
+
+
+        </div>
+        <div id = "h5">
+
+
+        </div>
+        <div id = "h6">
+
+
+        </div>
+        <div id = "h7">
+
+
+        </div>
+        <div id = "h8">
+
+
+        </div>
+
+
+    </div>
+
+
+    <div class="buttons">
+        <button id="nextMove" onclick="newMove('start')" style="background-color: rgb(50,110,66); width: 50px; border-radius: 25px;"> |< </button>
+        <button id="nextMove" onclick="newMove('prev')" style="background-color: rgb(199,145,90); width: 50px; border-radius: 25px;"> < </button>
+        <button id="nextMove" onclick="newMove('next')" style="background-color: rgb(199,145,90); width: 50px; border-radius: 25px;"> > </button>
+        <button id="nextMove" onclick="newMove('end')" style="background-color: rgb(50,110,66); width: 50px; border-radius: 25px;">  >| </button>
+    </div>
+
+    <div class="gameInfo">
+
+        <div id="whiteTime">
+
+        </div>
+        <div id="blackTime">
+
+        </div>
+
+        <h5 id="currentMove"></h5>
+
+        <div class="moves">
+            <!-- <h4 style="position: sticky;"> Moves: </h4> -->
+            <ol>
+                {% for key, value in moves.items() %}
+                    <li>{{key}} | {{value}}</li>
+                {% endfor %}
+            </ol>
+        </div>
+
+    </div>
+
+
+    <div class="guess">
+        <form class="guessElo" onsubmit="checkElo(event)">
+            <input id="userGuess" autocomplete="off" class="form-control mx-auto w-auto" name="symbol" placeholder="White's Elo" type="number" min="100">
+            <button id="submitElo" value="submit" type="submit" style="background-color: rgb(199,145,90); width: 110px; border-radius: 5px;">Guess</button>
+        </form>
+    </div>
+
+    <div class="result">
+
+    </div>
+
+
+        <script>
+
+            var moveNum = 0;
+            var positions = {{ positions | tojson }};
+            var elo = {{ elo }}
+            var times = {{ times | tojson }}
+
+            window.onload = function() {
+                moveNum = 0;
+                // #change move in moveinfo section (left of board)
+                curMove = document.querySelector("#currentMove")
+                curMove.innerHTML = "Move 0"
+                // console.log("hello")
+                // var positions = {{ positions | tojson }};
+                // console.log(JSON.stringify(positions));
+                // console.log(positions)
+                loadPos()
+            };
+
+            function newMove(type) {
+                totalMoves = positions.length - 1
+                if (type == 'next') {
+                    if (moveNum < totalMoves) {
+                        moveNum += 1
+                        loadPos() //dont load position if nothing changes as already at beginning or end
+                    }
+                }
+                else if (type == 'prev') {
+                    if (moveNum > 0) {
+                        moveNum -= 1
+                        loadPos()
+                    }
+                }
+                else if (type == 'start') {
+                    moveNum = 0
+                    loadPos()
+                }
+                else if (type == 'end') {
+                    moveNum = totalMoves;
+                    loadPos()
+                }
+                // #change move in moveinfo section (left of board)
+                curMove = document.querySelector("#currentMove")
+                curMove.innerHTML = `Move ${Math.floor((moveNum+1)/2)}`
+                // console.log(moveNum)
+            }
+
+            // chmod -R 755 static/ had to do this code to allow others for readable for images of pieces
+            function loadPos() {
+                for (var i = 0; i < 8; i++) {
+                    for (var j = 0; j < 8; j++) {
+
+                        var piece = positions[moveNum][i][j];
+                        var file = String.fromCharCode(97 + i);
+                            var rank = j+1;
+                            squarePos = "#"  + file + rank.toString();
+                            square = document.querySelector(squarePos);
+
+                        if (piece != "-"){
+                            // Finds unicode character for alternate text to display if image does not load
+                            if (piece === "K") {
+                                var alt = "&#9812"
+                            }
+                            else if (piece === "Q") {
+                                var alt = "&#9813"
+                            }
+                            else if (piece === "R") {
+                                var alt = "&#9814"
+                            }
+                            else if (piece === "B") {
+                                var alt = "&#9815"
+                            }
+                            else if (piece === "N") {
+                                var alt = "&#9816"
+                            }
+                            else if (piece === "P") {
+                                var alt = "&#9817"
+                            }
+                            if (piece === "k") {
+                                var alt = "&#9818"
+                            }
+                            else if (piece === "q") {
+                                var alt = "&#9819"
+                            }
+                            else if (piece === "r") {
+                                var alt = "&#9820"
+                            }
+                            else if (piece === "b") {
+                                var alt = "&#9821"
+                            }
+                            else if (piece === "n") {
+                                var alt = "&#9822"
+                            }
+                            else if (piece === "p") {
+                                var alt = "&#9823"
+                            }
+
+
+                            var imageName = 'pieces/' + piece + '.png';
+                            var imageUrl = "{{ url_for('static', filename='') }}" + imageName;
+                            square.innerHTML = '<img src="' + imageUrl + '" class="pieceImage" alt="' + alt + '"></img>';
+                        }
+                        else {
+                            square.innerHTML = '';
+                        }
+                        // console.log(squarePos, piece, imageUrl)
+                    }
+                }
+
+                // // LOAD times
+
+                // // #old/daily format, TITLE attribute for hover from chatGPT
+                if (times[0] === "daily or old API") {
+                    body = document.querySelector("#whiteTime")
+                    body.innerHTML = "<h5><span title='No Time Available, due to old chess.com API formatting/daily game'>XX:XX &#9432</span></h5>"
+                    body = document.querySelector("#blackTime")
+                    body.innerHTML = "<h5><span title='No Time Available, due to old chess.com API formatting/daily game'>XX:XX &#9432</span></h5>"
+                }
+                else {
+                    //WORKS AS each item in times is a time, where it alternates between white and black's new time (therefore white's times are all even indexes)
+                    //+1 cause there is two initial times (one per each) while only one initial setup/position
+                    // whites move
+                    if (moveNum % 2 === 1) {
+                        curTime = times[moveNum+1]
+                        body = document.querySelector("#whiteTime")
+                        body.innerHTML = `<h4>${curTime}</h4>`
+                        curTime = times[moveNum]
+                        body = document.querySelector("#blackTime")
+                        body.innerHTML = `<h4>${curTime}</h4>`
+                    }
+                    // blacks move
+                    else if (moveNum % 2 === 0) {
+                        curTime = times[moveNum]
+                        body = document.querySelector("#whiteTime")
+                        body.innerHTML = `<h4>${curTime}</h4>`
+                        curTime = times[moveNum+1]
+                        body = document.querySelector("#blackTime")
+                        body.innerHTML = `<h4>${curTime}</h4>`
+                    }
+                }
+            }
+
+            function checkElo() {
+                 // Prevent the default form submission
+                event.preventDefault();
+
+
+                // Get the input values
+                var guessedElo = document.getElementById('userGuess').value;
+                // Ensure guessedElo is a number
+                var guessedEloNumber = parseInt(guessedElo, 10);
+
+                if (isNaN(guessedEloNumber)) {
+                    alert('Please enter a valid number for the rating.');
+                    return;
+                }
+
+                var difference = Math.abs(guessedElo - elo);
+
+                // disallows resguess/resubmission
+                singleGuess = document.querySelector(".guess")
+                singleGuess.innerHTML = '<input id="userGuess"  autocomplete="off" class="form-control mx-auto w-auto" name="symbol" placeholder="White`s Elo" type="number" min="100" readonly>'
+
+                updateArea = document.querySelector(".result");
+                updateArea.innerHTML = `<p> You were ${difference} rating points off! </p> <p> Actual elo was {{ elo }}! </p> <button onclick="newGame()">New Game</button>`;
+
+                addToStats(difference);
+            }
+
+            function addToStats(difference) {
+                let formData = new FormData();
+                formData.append('guessDiff', difference);
+
+                fetch('/log_game', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => console.log('Data added successfully:', data))
+                .catch(error => console.error('Error adding data:', error));
+            }
+
+            function newGame() {
+                window.location.href = '/';
+            }
+
+        </script>
+
+{% endblock %}

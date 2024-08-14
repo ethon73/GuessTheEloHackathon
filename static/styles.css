@@ -1,0 +1,506 @@
+body {
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f0f0f0;
+    /* position: relative; */
+}
+
+/* .gameFlex {
+    display: flex;
+} */
+
+.chessboard {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 15%;
+    background-image: url('Screenshot (328).png');
+    background-size: contain;  /* Ensure the entire image fits within the element */
+    /* background-position: center;  Center the image */
+    background-repeat: no-repeat;  /* Prevent the image from repeating */
+    border: 3px solid black;
+
+    display: grid;
+    grid-template-columns: 12.5% 12.5% 12.5% 12.5% 12.5% 12.5% 12.5% 12.5%;
+    grid-template-rows: 12.5% 12.5% 12.5% 12.5% 12.5% 12.5% 12.5% 12.5%;
+
+    width: 65vw;  /* % of viewport width */
+    height: 65vw; /* Keep it square based on viewport width */
+    max-width: 65vh; /* Ensure it doesn't exceed the viewport height */
+    max-height: 65vh; /* Ensure it doesn't exceed the viewport height */
+}
+
+.gameInfo {
+    display: grid;
+    grid-template-rows: 15% 6% 69% 15%;
+    grid-template-columns: 100%;
+    left: 23%;
+    top: 15%;
+    position: absolute;
+    height: 62vh; /* Set a fixed height */
+    max-height: 62vh;
+}
+
+.moves {
+    height: 100%; /* Set a fixed height */
+    max-height: 100%;
+    overflow-y: scroll; /* Enable vertical scrolling */
+    grid-row: 3;
+}
+#currentMove {
+    grid-row: 2;
+    align-self: center;
+    justify-self: center;
+}
+
+#whiteTime {
+    grid-row: 4;
+    align-self: center;
+    justify-self: center;
+    background-color: white;
+    width: 80%;
+    height: 68%;
+    border-radius: 10%;
+    border: 2px solid grey;
+    display: flex; /* allows centering text, from cs50ai */
+    align-items: center;
+    justify-content: center;
+}
+#blackTime {
+    grid-row: 1;
+    align-self: center;
+    justify-self: center;
+    background-color: black;
+    color: white;
+    width: 80%;
+    height: 68%;
+    border-radius: 10%;
+    border: 2px solid grey;
+    display: flex; /* allows centering text, from cs50ai */
+    align-items: center;
+    justify-content: center;
+}
+
+.buttons {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 81%;
+}
+
+.guess {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 87%;
+}
+
+.guessElo {
+    display: flex;
+}
+
+.result {
+    position: absolute;
+    left: 68%;
+    top: 36%;
+}
+
+.pieceImage {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+
+#statsGrid {
+    position: absolute;
+    background-color: rgba(0,0,0, 0.1);
+    border: 3px solid orange;
+    width: 65%;
+    height: 85%;
+    top: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1;
+    display: grid;
+    grid-template-columns: 33.3% 33.3% 33.3%;
+    grid-template-rows: 20% 15% 15% 50%;
+}
+
+#statsIdentifier {
+    z-index: 2;
+    margin: 3%;
+    grid-column: 1/4;
+    grid-row: 1;
+    align-self: center;
+    justify-self: center;
+}
+
+.statsOverview {
+    z-index: 2;
+    display: flex;
+    grid-column: 1/4;
+    grid-row: 2;
+    align-self: center;
+    align-items: top;
+    justify-items: center;
+    justify-self: center;
+}
+.statsOverview h5, .statsOverview h4{
+    margin:0 10px;
+}
+
+#statsHeader{
+    z-index: 2;
+    grid-column: 1/4;
+    grid-row: 3;
+    align-self: center;
+    justify-self: center;
+}
+
+.statsDistribution {
+    z-index: 2;
+    display: flex;
+    grid-column: 1/4;
+    grid-row: 4;
+    align-self: center;
+    justify-self: center;
+    align-items: center;
+    justify-items: center;
+
+}
+
+.numberOfGuesses p{
+    padding: 0;
+    margin: 3px;
+}
+
+#a1 {
+    z-index: 2;
+    grid-column: 1;
+    grid-row: 8;
+}
+#a2 {
+    z-index: 2;
+    grid-column: 2;
+    grid-row: 8;
+}
+#a3 {
+    z-index: 2;
+    grid-column: 3;
+    grid-row: 8;
+}
+#a4 {
+    z-index: 2;
+    grid-column: 4;
+    grid-row: 8;
+}
+#a5 {
+    z-index: 2;
+    grid-column: 5;
+    grid-row: 8;
+}
+#a6 {
+    z-index: 2;
+    grid-column: 6;
+    grid-row: 8;
+}
+#a7 {
+    z-index: 2;
+    grid-column: 7;
+    grid-row: 8;
+}
+#a8 {
+    z-index: 2;
+    grid-column: 8;
+    grid-row: 8;
+}
+/* ~~~ */
+#b1 {
+    z-index: 2;
+    grid-column: 1;
+    grid-row: 7;
+}
+#b2 {
+    z-index: 2;
+    grid-column: 2;
+    grid-row: 7;
+}
+#b3 {
+    z-index: 2;
+    grid-column: 3;
+    grid-row: 7;
+}
+#b4 {
+    z-index: 2;
+    grid-column: 4;
+    grid-row: 7;
+}
+#b5 {
+    z-index: 2;
+    grid-column: 5;
+    grid-row: 7;
+}
+#b6 {
+    z-index: 2;
+    grid-column: 6;
+    grid-row: 7;
+}
+#b7 {
+    z-index: 2;
+    grid-column: 7;
+    grid-row: 7;
+}
+#b8 {
+    z-index: 2;
+    grid-column: 8;
+    grid-row: 7;
+}
+/* ~~~ */
+#c1 {
+    z-index: 2;
+    grid-column: 1;
+    grid-row: 6;
+}
+#c2 {
+    z-index: 2;
+    grid-column: 2;
+    grid-row: 6;
+}
+#c3 {
+    z-index: 2;
+    grid-column: 3;
+    grid-row: 6;
+}
+#c4 {
+    z-index: 2;
+    grid-column: 4;
+    grid-row: 6;
+}
+#c5 {
+    z-index: 2;
+    grid-column: 5;
+    grid-row: 6;
+}
+#c6 {
+    z-index: 2;
+    grid-column: 6;
+    grid-row: 6;
+}
+#c7 {
+    z-index: 2;
+    grid-column: 7;
+    grid-row: 6;
+}
+#c8 {
+    z-index: 2;
+    grid-column: 8;
+    grid-row: 6;
+}
+/* ~~~ */
+#d1 {
+    z-index: 2;
+    grid-column: 1;
+    grid-row: 5;
+}
+#d2 {
+    z-index: 2;
+    grid-column: 2;
+    grid-row: 5;
+}
+#d3 {
+    z-index: 2;
+    grid-column: 3;
+    grid-row: 5;
+}
+#d4 {
+    z-index: 2;
+    grid-column: 4;
+    grid-row: 5;
+}
+#d5 {
+    z-index: 2;
+    grid-column: 5;
+    grid-row: 5;
+}
+#d6 {
+    z-index: 2;
+    grid-column: 6;
+    grid-row: 5;
+}
+#d7 {
+    z-index: 2;
+    grid-column: 7;
+    grid-row: 5;
+}
+#d8 {
+    z-index: 2;
+    grid-column: 8;
+    grid-row: 5;
+}
+/* ~~~ */
+#e1 {
+    z-index: 2;
+    grid-column: 1;
+    grid-row: 4;
+}
+#e2 {
+    z-index: 2;
+    grid-column: 2;
+    grid-row: 4;
+}
+#e3 {
+    z-index: 2;
+    grid-column: 3;
+    grid-row: 4;
+}
+#e4 {
+    z-index: 2;
+    grid-column: 4;
+    grid-row: 4;
+}
+#e5 {
+    z-index: 2;
+    grid-column: 5;
+    grid-row: 4;
+}
+#e6 {
+    z-index: 2;
+    grid-column: 6;
+    grid-row: 4;
+}
+#e7 {
+    z-index: 2;
+    grid-column: 7;
+    grid-row: 4;
+}
+#e8 {
+    z-index: 2;
+    grid-column: 8;
+    grid-row: 4;
+}
+/* ~~~ */
+#f1 {
+    z-index: 2;
+    grid-column: 1;
+    grid-row: 3;
+}
+#f2 {
+    z-index: 2;
+    grid-column: 2;
+    grid-row: 3;
+}
+#f3 {
+    z-index: 2;
+    grid-column: 3;
+    grid-row: 3;
+}
+#f4 {
+    z-index: 2;
+    grid-column: 4;
+    grid-row: 3;
+}
+#f5 {
+    z-index: 2;
+    grid-column: 5;
+    grid-row: 3;
+}
+#f6 {
+    z-index: 2;
+    grid-column: 6;
+    grid-row: 3;
+}
+#f7 {
+    z-index: 2;
+    grid-column: 7;
+    grid-row: 3;
+}
+#f8 {
+    z-index: 2;
+    grid-column: 8;
+    grid-row: 3;
+}
+/* ~~~ */
+#g1 {
+    z-index: 2;
+    grid-column: 1;
+    grid-row: 2;
+}
+#g2 {
+    z-index: 2;
+    grid-column: 2;
+    grid-row: 2;
+}
+#g3 {
+    z-index: 2;
+    grid-column: 3;
+    grid-row: 2;
+}
+#g4 {
+    z-index: 2;
+    grid-column: 4;
+    grid-row: 2;
+}
+#g5 {
+    z-index: 2;
+    grid-column: 5;
+    grid-row: 2;
+}
+#g6 {
+    z-index: 2;
+    grid-column: 6;
+    grid-row: 2;
+}
+#g7 {
+    z-index: 2;
+    grid-column: 7;
+    grid-row: 2;
+}
+#g8 {
+    z-index: 2;
+    grid-column: 8;
+    grid-row: 2;
+}
+/* ~~~ */
+#h1 {
+    z-index: 2;
+    grid-column: 1;
+    grid-row: 1;
+}
+#h2 {
+    z-index: 2;
+    grid-column: 2;
+    grid-row: 1;
+}
+#h3 {
+    z-index: 2;
+    grid-column: 3;
+    grid-row: 1;
+}
+#h4 {
+    z-index: 2;
+    grid-column: 4;
+    grid-row: 1;
+}
+#h5 {
+    z-index: 2;
+    grid-column: 5;
+    grid-row: 1;
+}
+#h6 {
+    z-index: 2;
+    grid-column: 6;
+    grid-row: 1;
+}
+#h7 {
+    z-index: 2;
+    grid-column: 7;
+    grid-row: 1;
+}
+#h8 {
+    z-index: 2;
+    grid-column: 8;
+    grid-row: 1;
+}
